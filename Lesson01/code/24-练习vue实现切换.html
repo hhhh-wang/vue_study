@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+
+<style>
+	#root button {
+		padding: 5px;
+		margin: 5px;
+
+	}
+	#root button.action {
+		background: red;
+	}
+	#root div {
+		width: 300px;
+		height: 200px;
+		border: 1px solid green;
+	}
+</style>
+
+<body>
+	<div id="root">
+
+		<button @click="index=0"   :class="{action:index ===0 }"  >体育</button>
+		<button @click="index=1"   :class="{action:index ===1 }"  >娱乐</button>
+		<button @click="index=2"   :class="{action:index ===2 }"  >财经</button>
+
+		<div v-show="index===0">体育新闻列表</div>
+		<div v-show="index===1">娱乐新闻列表</div>
+		<div v-show="index===2">财经新闻列表</div>
+	</div>
+</body>
+<script>
+	new Vue({
+		el: "#root",
+
+		data:{
+			index:0
+		}
+
+
+	})
+</script>
+
+</html>
