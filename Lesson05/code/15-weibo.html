@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-	<link href="style/weibo.css" rel="stylesheet" type="text/css" />
-	<script src="lib/vue.js"></script>
-	<script src="lib/axios.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="style/weibo.css" rel="stylesheet" type="text/css"/>
+    <script src="lib/vue.js"></script>
+    <script src="lib/axios.min.js"></script>
 </head>
 <body>
 <div class="jyArea">
-	<take-comment></take-comment>
-	<comment-on></comment-on>
+    <take-comment></take-comment>
+    <comment-on></comment-on>
 </div>
 </body>
 <script type="module">
-	import TakeComment from "./components/TakeComment.js";
-	import CommentOn from "./components/CommentOn.js";
-	const $axios = axios.create({
-		// baseURL:"http://zhangpeiyue.com:8090"
-		baseURL:"http://127.0.0.1:8090"
-	})
-	$axios.interceptors.response.use(res=>{
-		if(res.data.ok === 1) return res.data;
-		alert(res.data.msg);
-		return new Promise(()=>{});
-	})
-	Vue.prototype.$bus = new Vue();
-	Vue.prototype.$axios = $axios;
-	
-	new Vue({
-		el:".jyArea",
-		components:{
-			TakeComment,
-			CommentOn
-		}
-	})
+    import TakeComment from "./components/TakeComment.js";
+    import CommentOn from "./components/CommentOn.js";
+
+    const $axios = axios.create({
+        // baseURL:"http://zhangpeiyue.com:8090"
+        baseURL: "http://127.0.0.1:8090"
+    })
+    $axios.interceptors.response.use(res => {
+        if (res.data.ok === 1) return res.data;
+        alert(res.data.msg);
+        return new Promise(() => {
+        });
+    })
+    Vue.prototype.$bus = new Vue();
+    Vue.prototype.$axios = $axios;
+
+    new Vue({
+        el: ".jyArea",
+        components: {
+            TakeComment,
+            CommentOn
+        }
+    })
 </script>
 </html>

@@ -1,8 +1,15 @@
 export default {
-	props:["pageNo","pageSum"],
-	template:(`
-		<div class="page">
-            <a @click="$bus.$emit('getWeibo',i)" v-for="i in pageSum" href="javascript:;" :class="{active:i===pageNo}">{{i}}</a>
+    props: ["pageNo", "pageSum"],
+    template: (`
+        <div class="page">
+            <a 
+                v-for="i in pageSum" 
+                href=";" 
+                :class="{ active: i === pageNo }" 
+                @click="$bus.$emit('getWeibo', i)"
+            >
+                {{ i }}
+            </a>
         </div>
-	`)
+    `)
 }
