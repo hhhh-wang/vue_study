@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<button @click="fn">点我</button>
+	<hr/>
+	<Child/>
+</div>
+</body>
+<script>
+	Vue.prototype.$bus = new Vue();
+	new Vue({
+		el: "#app",
+		methods: {
+			fn() {
+				this.$bus.$emit("one","app");
+			}
+		},
+		components: {
+			Child: {
+				template:(`
+					<button @click="my">child</button>
+				`),
+				methods:{
+					my(){
+						this.$bus.$emit("one","child");
+					}
+				},
+				mounted(){
+					console.log("child",this)
+				}
+			}
+		},
+		mounted() {
+			console.log("挂载完毕之后执行一次",this)
+			this.$bus.$on("one", function (str) {
+				console.log("当发布消息one时执行",str)
+			})
+		}
+	})
+</script>
+</html>

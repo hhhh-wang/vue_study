@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<Child></Child>
+	<one></one>
+	<two></two>
+</div>
+</body>
+<script type="module">
+	// 全局组件：可以在任意实例以及组件中使用的组件
+	// 第一个参数是组件名，第二个参数是组件的配置项
+	// 方案一
+	// import One from "./components/One.js"
+	// import Two from "./components/Two.js"
+	// Vue.component("One",One);
+	// Vue.component("Two",Two);
+	
+	// 方案二
+	// const One = await import("./components/One.js")
+	// Vue.component("One",One.default);
+	// const Two = await import("./components/Two.js")
+	// Vue.component("Two",Two.default);
+	
+	// 方案三：推荐
+	import components from "./components/index.js";
+	for(let key in components){
+		Vue.component(key,components[key]);
+	}
+	new Vue({
+		el:"#app",
+		components:{
+			Child:{
+				template:(`
+					<div>
+						<h3>Child</h3>
+						<one></one>
+					</div>
+				`)
+			}
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<button @click="fn">你过来呀！</button>
+	<div ref="my">1</div>
+	<div ref="my">2</div>
+	<hr/>
+	<p ref="myP" v-for="item in arr" :key="item">{{item}}</p>
+</div>
+</body>
+<script>
+	// 注意：如果设置ref的值相同，那么后者会覆盖前者。
+	// 注意：如果ref与v-for结合使用，那么获取到的是数组。
+	new Vue({
+		el:"#app",
+		data:{
+			arr:[1,2,3,4]
+		},
+		methods:{
+			fn(){
+				// console.log(this.$refs.my)
+				console.log(this.$refs.myP[0].innerText)
+			}
+		}
+	})
+</script>
+</html>

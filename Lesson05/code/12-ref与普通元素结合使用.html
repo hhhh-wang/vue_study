@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<input type="text" ref="inp">
+	<div ref="my">my</div>
+	<button ref="btn" @click="fn">点我</button>
+</div>
+</body>
+<script>
+	// 1- 设置：为元素增加ref属性，值为字符串
+	// 2- 获取：通过this.$refs.字符串-获取真实DOM
+	new Vue({
+		el:"#app",
+		methods:{
+			fn(e){
+				console.log(e.target.innerText);
+				console.log(document.querySelector("button").innerText);
+				console.log(this.$refs.btn.innerText);
+				console.log(this.$refs.btn === document.querySelector("button"));// true
+				console.log(this.$refs.my);
+				this.$refs.my.style.color = "pink";
+				console.log(this.$refs.inp.value)
+			}
+		}
+	})
+</script>
+</html>

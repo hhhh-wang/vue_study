@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" href="index.css">
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="root">
+	<div class="todo-container">
+		<div class="todo-wrap">
+			<todo-header></todo-header>
+			<todo-main :task-list="taskList"></todo-main>
+			<todo-footer></todo-footer>
+		</div>
+	</div>
+</div>
+</body>
+<script>
+	Vue.prototype.$bus = new Vue();
+	new Vue({
+		el:"#root",
+		data:{
+			taskList:[]
+		},
+		methods:{
+			addTaskList(e){
+				// this.taskList = [
+				// 	{
+				// 		id:Date.now(),
+				// 		title
+				// 	},
+				// 		...this.taskList
+				// ]
+			}
+		},
+		mounted(){
+			this.$bus.$on("addTaskList",this.addTaskList)
+		},
+		components:{
+			// 头部
+			todoHeader:{
+				template:(`
+					<div class="todo-header">
+                        <input @keyup.enter="$bus.$emit('addTaskList',$event)" type="text" placeholder="请输入你的任务名称，按回车键确认"/>
+                    </div>
+				`)
+			},
+			// 主体
+			todoMain:{
+				template:(`
+					<ul class="todo-main">
+			            <li>
+			               <label>
+			                  <input type="checkbox"/>
+			                  <span>xxxxx</span>
+			               </label>
+			               <button class="btn btn-danger" style="display:none">删除</button>
+			            </li>
+			            <li>
+			               <label>
+			                  <input type="checkbox"/>
+			                  <span>yyyy</span>
+			               </label>
+			               <button class="btn btn-danger" style="display:none">删除</button>
+			            </li>
+			         </ul>
+				`)
+			},
+			// 底部
+			todoFooter:{
+				template:(`
+				<div class="todo-footer">
+		            <label>
+		               <input type="checkbox"/>
+		            </label>
+		            <span>已完成0/ 全部2</span>
+		            <button class="btn btn-danger">清除已完成任务</button>
+		         </div>
+				`)
+			}
+		}
+	})
+</script>
+</html>

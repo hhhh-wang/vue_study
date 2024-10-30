@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" href="index.css">
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="root">
+	<div class="todo-container">
+		<div class="todo-wrap">
+			<todo-header></todo-header>
+			<todo-main></todo-main>
+			<todo-footer></todo-footer>
+		</div>
+	</div>
+</div>
+</body>
+<script type="module">
+	import todoHeader from "./components/todoHeader.js";
+	import {todoMain} from "./components/todoMain.js";
+	import {todoFooter} from "./components/todoFooter.js";
+	
+	new Vue({
+		el:"#root",
+		components:{
+			// 头部
+			todoHeader,
+			// 主体
+			todoMain,
+			// 底部
+			todoFooter
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<child></child>
+	<my-com></my-com>
+<!--	在child组件中声明的组件只允许在child组件中使用-->
+<!--	<one></one>-->
+</div>
+<div id="root">
+<!--	在app中声明的组件只允许在app模板中使用-->
+<!--	<child></child>-->
+</div>
+</body>
+<script>
+	// 局部组件。
+	// 1- 在某个实例中声明（注册，定义）的组件，只允许在本实例中使用
+	// 2- 在组件中声明的组件，只允许在本组件中使用。
+	new Vue({
+		el:"#app",
+		components:{
+			Child:{
+				template:(`
+					<div>
+						<h3>Child</h3>
+						<one></one>
+					</div>
+					
+				`),
+				components:{
+					One:{
+						template:(`
+							<h3>One</h3>
+						`)
+					}
+				}
+			},
+			MyCom:{
+				template:(`
+					<div>
+						<h3>myCom</h3>
+<!--						<one></one>-->
+					</div>
+				`)
+			}
+		}
+	})
+	new Vue({
+		el:"#root"
+	})
+</script>
+</html>

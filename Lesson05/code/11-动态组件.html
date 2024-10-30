@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<button @click="changeIndex">切换</button>
+	<!--使用动态组件:component是内置组件，is属性的值是要使用的组件的名字-->
+	<component :is="arr[index]"></component>
+<!--	<component v-show="index===i" v-for="(item,i) in arr" :is="item" :key="i"></component>-->
+	
+	<!--未使用动态组件-->
+<!--	<one v-if="index===0"></one>-->
+<!--	<two v-else-if="index===1"></two>-->
+<!--	<three v-else-if="index===2"></three>-->
+<!--	<four v-else-if="index===3"></four>-->
+</div>
+</body>
+<script>
+	new Vue({
+		el:"#app",
+		data:{
+			arr:["one","two","three","four"],
+			index:0
+		},
+		methods:{
+			changeIndex(){
+				this.index++;
+				if(this.index>3) this.index=0;
+			}
+		},
+		components:{
+			One:{
+				template:(`
+					<div style="background:red">one</div>
+				`)
+			},
+			Two:{
+				template:(`
+					<div style="background:green">two</div>
+				`)
+			},
+			Three:{
+				template:(`
+					<div style="background:yellow">three</div>
+				`)
+			},
+			Four:{
+				template:(`
+					<div style="background:pink">four</div>
+				`)
+			}
+		}
+	})
+</script>
+</html>

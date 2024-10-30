@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<child @click.native="fn" :a="1" :styles="{color:'red'}" ></child>
+</div>
+</body>
+<script>
+	// 如果要为组件提供事件，那么需要在事件名后增加修饰符native
+	new Vue({
+		el:"#app",
+		methods:{
+			fn(){
+				console.log("fn")
+			}
+		},
+		components:{
+			Child:{
+				props:["styles","a"],
+				template:(`
+					<div :style="styles">
+						child组件
+					</div>
+				`)
+			}
+		}
+	})
+</script> 
+</html>
