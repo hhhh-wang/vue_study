@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/Zhang3.js"></script>
+</head>
+<body>
+	<div id="root"></div>
+</body>
+<script>
+	const zm = new Zhang({
+		data:{
+			age:12,
+			userName:"zhangsan"
+		},
+		methods:{
+			fn(){
+				console.log(this,this.age,this.userName);
+			}
+		}
+	});
+	// zm.fn();
+	const fn = zm.fn;
+	fn();
+	
+	console.log(zm)
+</script>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<input v-model="bookName" type="text">
+	<p>{{bookName}}</p>
+	<p>{{bookName | book}}1</p>
+	<p v-book>{{bookName}}1</p>
+	<p v-red>{{bookName}}</p>
+	<p v-green v-book>{{bookName}}</p>
+	<p v-color="'pink'">{{bookName}}</p>
+	<p v-color="'blue'">{{bookName}}</p>
+	<p v-style:background="'red'">{{bookName}}</p>
+	<p v-style:background.lazy="'green'">{{bookName}}</p>
+</div>
+</body>
+<script>
+	// 说明：过滤器针对的是某一个数据,自定义的指令针对的是元素。
+	// 指令分为：内置指令以及自定义指令。
+	// 自定义指令分为：全局以及局部指令，通过属性directive
+	// 指令：以v-开头的特殊属性。
+	// 指令的构成：v-name:arg.modifier=value
+	// 1- 无值(value): v-else v-once v-pre v-cloak
+	// 2- 有值（value): v-if=value v-else-if=value v-show=value v-html=value v-text=value
+	// 3- 有参数（arg): v-bind:arg=value v-model:arg=value v-on:click=value
+	// 4- 有修饰符（modifier):v-model.number @click.stop
+	new Vue({
+		el:"#app",
+		data:{
+			bookName:"天龙八部"
+		},
+		filters:{
+			book(v){
+				return "《"+v+"》";
+			}
+		},
+		directives:{
+			// 定义一个名字为book的指令
+			// 接收的第一个参数是指令所在的元素对象。
+			book(el){
+				// 1-this指向的是window,所以在指令中不建议操作实例属性的。
+				// console.log(this)
+				// 2-自定义的指令是在挂载前执行。初次执行时，数据与视图还未进行绑定：{{bookName}}
+				// 3-当数据发生更改后，视图要更新，指令会再次执行，在此处通过document获取的数据是最新的。
+				console.log("book",document.querySelector("p").innerText);
+				el.innerText = "《"+el.innerText+"》"
+			},
+			red(el){
+				el.style.color = "red";
+			},
+			green(el){
+				el.style.color = "green";
+			},
+			color(el,binds){
+				//  v-color="'pink'"
+				// expression:"'pink'"--->= 右侧
+				// modifiers:{}---->修饰符
+				// name："color"---->自定义指令的名字
+				// rawName:"v-color"--->带v-+name
+				// value:"pink"
+				// console.log(binds);
+				el.style.color = binds.value;
+			},
+			style(el,binds){
+				// arg:"background"--->参数
+				if(binds.modifiers.lazy){
+					setTimeout(()=>{
+						el.style[binds.arg]=binds.value;
+					},2000)
+				}else{
+					el.style[binds.arg]=binds.value;
+				}
+				
+			}
+		},
+		mounted(){
+			console.log("mounted");
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<input type="text" v-model="bookName">
+	<p>{{bookName}}</p>
+	<p v-book>{{bookName}}</p>
+</div>
+</body>
+<script>
+	new Vue({
+		el:"#app",
+		data:{
+			bookName:"天龙八部"
+		},
+		directives:{
+			// 1- this是window
+			book(el){
+				// 1- 挂载完成前执行
+				// 2- 数据更新后，但视图还未更新
+				console.log(el.innerText,document.querySelector("p").innerText);
+				el.innerText = "《"+el.innerText+"》"
+			}
+		}
+	})
+</script>
+</html>

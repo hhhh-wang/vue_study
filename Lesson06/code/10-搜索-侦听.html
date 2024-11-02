@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<input v-model="keyword" type="text">
+	<!--非侦听-->
+<!--	<p v-show="item.includes(keyword) && keyword" v-for="(item,index) in arr" :key="index">{{item}}</p>-->
+	<!--侦听-->
+	<p v-for="(item,index) in resultArr" :key="index">{{item}}</p>
+</div>
+</body>
+<script>
+	new Vue({
+		el:"#app",
+		data:{
+			keyword:"",
+			resultArr:[],
+			arr:["zhangsan","lisi","wangwu","zhaoliu","yanqi","shenba","qianjiu","shenshi"]
+		},
+		watch:{
+			keyword(newValue){
+				this.resultArr = this.arr.filter(v=>v.includes(newValue.toLowerCase()));
+			}
+		}
+	
+	})
+</script>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<h3 ref="h3Ref">{{title}}</h3>
+</div>
+</body>
+<script>
+	// 挂载阶段的钩子函数在整个生命周期中只会执行一次.
+	new Vue({
+		el:"#app",
+		data:{
+			title:"挂载阶段"
+		},
+		methods:{
+			fn(){
+			
+			}
+		},
+		beforeCreate(){
+			// 实例创建完成之前调用:常用于判断用户权限以及设置Vue.prototype
+			// const $axios = axios.create({
+			// 	baseURL
+			// });
+			// Vue.prorotype.$axios = $axios;
+			// Vue.prototype.$bus = new Vue();
+			console.group("**********1-beforeCreate*************************");
+			console.log("$data",this.$data);// undefined
+			console.log("data",this.title);// undefined
+			console.log("methods",this.fn);// undefined
+			console.log("ref",this.$refs.h3Ref);// undefined
+			console.groupEnd();
+		},
+		created(){
+			// 实例创建完成.可以在此处调用属性以及方法
+			this.title = "学习挂载阶段";// 修改数据状态,不会更新视图.
+			console.group("**********2-created*************************");
+			console.log("$data",this.$data);// {title:"学习挂载阶段"}
+			console.log("data",this.title);// 学习挂载阶段
+			console.log("methods",this.fn);// function(){}
+			console.log("ref",this.$refs.h3Ref);// undefined
+			console.groupEnd();
+		},
+		beforeMount(){
+			this.title = "正在学习挂载阶段";
+			console.group("**********3-beforeMount*************************");
+			console.log("$data",this.$data);// {title:"正在学习挂载阶段"}
+			console.log("data",this.title);// 正在学习挂载阶段
+			console.log("methods",this.fn);// function(){}
+			console.log("ref",this.$refs.h3Ref);// undefined
+			console.groupEnd();
+		},
+		mounted(){
+			// 可以在此处通过AJAX调用数据,并修改数据状态.
+			console.group("**********4-mounted*************************");
+			console.log("$data",this.$data);// {title:"正在学习挂载阶段"}
+			console.log("data",this.title);// 正在学习挂载阶段
+			console.log("methods",this.fn);// function(){}
+			console.log("ref",this.$refs.h3Ref);// h3
+			console.groupEnd();
+		}
+	})
+</script>
+</html>

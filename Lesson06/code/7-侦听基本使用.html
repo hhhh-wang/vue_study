@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="num++;a=num+'!'">{{num}}</button>
+    <button @click="num++;a=num+'!'">{{num}}</button>
+    <button @click="changeNum">{{num}}</button>
+    <p>a:{{a}}</p>
+    <!--数字-->
+    <button @click="num++">{{num}}</button>
+    <hr/>
+    <!--字符串-->
+    <input type="text" v-model="str">
+    <hr/>
+    <!--对象-->
+    <input type="text" v-model="obj.userName">
+    <input type="text" v-model.number="obj.age">
+    <button @click="changeObj">更改obj</button>
+    <p>{{obj}}</p>
+    <hr/>
+    <!--数组-->
+    <button @click="changeArr">更改</button>
+    <p>{{arr}}</p>
+</div>
+</body>
+<script>
+    // 通过配置watch对象可以实现侦听
+    new Vue({
+        el: "#app",
+        data: {
+            num: 1,
+            a: "asdfasdf",
+            str: "今天有点热！",
+            obj: {
+                userName: "zhangsan",
+                age: 12
+            },
+            arr: [1, 2, 3, 4]
+        },
+        methods: {
+            changeArr() {
+                // 支持响应式
+                // this.arr.push(this.arr.length+1);
+
+                // 更改某一个元素:不支持响应式，也不支持侦听(包括深度侦听也不支持)。
+                // this.arr[3] = 100;
+
+                // 解决方案一：通过更改数组的引用地址
+                // this.arr = this.arr.map((item,index)=>{
+                // 	if(index===3) item = 100;
+                // 	return item;
+                // })
+
+                // 解决方案二：通过实例中的$set方法。
+                // this.$set(this.arr,3,100);
+            },
+            changeNum() {
+                this.num++;
+                this.a = this.num + '!'
+            },
+            changeObj() {
+                this.obj.userName = "lisi";
+                this.obj.age = 100;
+                // this.obj = {
+                // 	userName:"lisi",
+                // 	age:100
+                // }
+            }
+        },
+        watch: {
+            /*************数组*****************************************/
+            arr(newValue, oldValue) {
+                console.log("arr", newValue, oldValue);
+            },
+            // arr:{
+            // 	handler(newValue,oldValue){
+            // 		console.log("arr",newValue,oldValue);
+            // 	},
+            // 	deep:true
+            // }
+            /*************对象*****************************************/
+            // 如果对象的引用地址未发生更改，用以下方法无法进行侦听。
+            // 如果只是更改对象的属性值，支持响应式，但是无法侦听。
+            // obj(newValue,oldValue){
+            // 	console.log("obj",newValue,oldValue)
+            // },
+
+            // 如果对象的属性发生改变，还要进行侦听，要两种方法
+            // 方案一：使用深度侦听
+            // obj:{
+            // 	handler(newValue,oldValue){
+            // 		console.log("obj",newValue,oldValue)
+            // 	},
+            // 	// 深度侦听：属性发生改变也可以侦听到对象。
+            // 	deep:true
+            // }
+
+            // 方案二：侦听对象的属性
+            // 当obj下的userName属性发生改变后，会执行
+            // "obj.userName"(newValue,oldValue){
+            // 	console.log("obj.userName",newValue,oldValue);
+            // },
+            // "obj.age":{
+            // 	handler(newValue,oldValue){
+            // 		console.log("obj.age",newValue,oldValue);
+            // 	}
+            // }
+
+            /*************字符串*****************************************/
+            // str(newValue,oldValue){
+            // 	console.log("str",newValue,oldValue)
+            // }
+
+            // str:{
+            // 	handler(newValue,oldValue){
+            // 		console.log("str",newValue,oldValue)
+            // 	},
+            // 	immediate:true
+            // }
+            /*************数字*****************************************/
+            // 注意：侦听的值类型可以是函数也可以是对象
+            // 1- 函数
+            // 侦听num-类型是数字
+            // 当num发生改变，会执行该函数。
+            // 接收两个参数：newValue（修改后的值）,oldValue(修改前的值)
+            // 函数中的this指向的是Vue实例。
+            // num(newValue,oldValue){
+            // 	// console.log("num",newValue,oldValue,this)
+            // 	this.a = newValue+"!";
+            // }
+
+            // 2- 对象
+            // num: {
+            // 	// 句柄：要干什么。
+            // 	handler(newValue, oldValue) {
+            // 		// console.log("handler",newValue,oldValue);
+            // 		this.a = this.num + "!";
+            // 	},
+            // 	// true:代表立即执行，且数据发生改变会再次执行
+            // 	// false:默认值，只有据发生改变后才会执行
+            // 	immediate: true
+            // }
+
+
+        }
+    })
+</script>
+</html>

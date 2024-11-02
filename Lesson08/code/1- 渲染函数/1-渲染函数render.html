@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	my
+</div>
+</body>
+<script>
+	// 1- template相较于render优先级要低。
+	// 2- render生成的虚拟DOM,而template的值是字符串（字符串也会在内部转为虚拟DOM)
+	//    render效率会更高。
+	const App = {
+		data(){
+			return {
+				num:1
+			}
+		},
+		methods:{
+			changeNum(){
+				this.num++;
+			}
+		},
+		template:(`
+					<button @click="changeNum">{{num}}</button>
+				`)
+	};
+	new Vue({
+		template:(`
+			<h3>App</h3>
+		`),
+		// 接收一个函数（createElement）
+		// 将该函数运行的结果进行返回
+		// 1
+		render(createElement){
+			return createElement("h3","你好吗？")
+		},
+		
+		// 2
+		render(createElement){
+			return createElement({
+				data(){
+					return {
+						num:1
+					}
+				},
+				methods:{
+					changeNum(){
+						this.num++;
+					}
+				},
+				template:(`
+					<button @click="changeNum">{{num}}</button>
+				`)
+			})
+		}
+		
+		// 3- 将对象抽离至外部
+		render(createElement){
+			return createElement(App)
+		}
+		
+		// 4- 非简写
+		render:function(createElement){
+			return createElement(App)
+		}
+		
+		// 5- 箭头函数
+		render:h=> h(App)
+	}).$mount("#app")
+</script>
+</html>

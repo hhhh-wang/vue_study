@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+	// 拦截器（拦截方法）：是Object对象下的一个方法
+	let obj = {
+		userName:"zhangsan"
+	}
+	let _userName = obj.userName;
+	// obj.userName = "lisi";
+	// console.log(obj.userName);// lisi
+	Object.defineProperty(obj,"userName",{
+		// 读
+		get(){
+			console.log("get")
+			return "《"+_userName+"》";
+		},
+		// 写
+		set(v){
+			// console.log("set",v)
+			_userName = v;
+		}
+	})
+	console.log(obj.userName);// 读取数据
+	obj.userName = "lisi";
+	console.log(obj.userName);// 《lisi》
+</script>
+</html>

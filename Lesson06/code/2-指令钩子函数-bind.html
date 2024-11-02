@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<input type="text" v-model="bookName">
+	<p>{{bookName}}</p>
+	<div v-book>{{bookName}}</div>
+<!--	<div v-color="'pink'">{{bookName}}</div>-->
+</div>
+</body>
+<script>
+	new Vue({
+		el:"#app",
+		data:{
+			bookName:"天龙八部"
+		},
+		directives:{
+			color:{
+				bind(el,binds){
+					el.style.color = binds.value;
+				}
+			},
+			// book:{
+			// 	inserted(el,binds){
+			// 		console.log("inserted",el.innerText);
+			// 		el.innerText = "《"+el.innerText+"》"
+			// 	}
+			// }
+			
+			
+			
+			
+			
+			
+			
+			// color(el,binds){
+			// 	console.log("color")
+			// 	el.style.color = binds.value;
+			// }
+
+			// book:{
+			// 	// 在挂载之前执行，数据更新后不再执行了
+			// 	bind(el,binds){
+			// 		el.innerText = `《${el.innerText}》`;
+			// 	}
+			// }
+			// 指令针对的是元素
+			book(el){
+				// 当执行到此处时，数据已经发生改变，但是视图未更新。
+				// console.log(document.querySelector("div")===el);// false
+				console.log(document.querySelector("#app div").innerText)
+				el.innerText = `《${el.innerText}》`;// 将div元素的内容包裹上书名号
+				// 视图更新
+				console.log(el.innerText,document.querySelector("#app div").innerText);
+
+			}
+		},
+		mounted(){
+			console.log("mounted")
+		}
+	})
+</script>
+</html>

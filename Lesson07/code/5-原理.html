@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/Zhang7.js"></script>
+</head>
+<body>
+<div id="root">
+	<button @click="changeStr">点我</button>
+	<input z-model="str" type="text">
+	<div z-text="str"></div>
+	<div z-html="str"></div>
+	<hr/>
+	<div>
+		<input type="text" z-model="num">
+		<div z-text="num"></div>
+	</div>
+
+</div>
+</body>
+<script>
+	// 数据与订阅者是一对多的关系。
+	// 编译器（compile）：编译模板
+	// 发布者（observe）:负责侦听数据，一旦数据发生改变会通过订阅者
+	// 产生订阅者（Watcher）:生成订阅者。
+	// 由编译器（解析器）对模板进行解析,解析的过程中一旦发现有对应的（数据，函数，过滤器等）信息，那么会将对应的数据，（Watcher）增加一个订阅者。
+	// 一旦数据发生改变，侦听器（observe)会通知对应数据的所有订阅者。订阅者负责更新视图。
+	const zm = new Zhang({
+		el: "#root",
+		data: {
+			str: "<a>我在尚硅谷学习</a>",
+			num: 1
+		},
+		methods: {
+			changeStr() {
+				this.str += "!";
+				this.num++;
+				// console.log(this.str,this.num);
+			}
+		}
+	})
+</script>
+</html>

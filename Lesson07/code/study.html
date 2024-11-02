@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+	// var userName = "window";
+	// const obj = {
+	// 	userName:"obj",
+	// 	fn(){
+	// 		console.log(this.userName)
+	// 	}
+	// }
+	// // obj.fn();
+	// // const fn = obj.fn;
+	// // fn();
+	//
+	// const fn = obj.fn.bind(obj);
+	// fn();
+	
+	// const obj = {
+	//
+	// }
+	// let age = 100;
+	// obj.userName = "zhangsan";
+	// obj[age] = 12;// age变量的值作为属性名
+	// console.log(obj);// {userName:zhangsan,100:12}
+	
+	
+	let c = 10;
+	const obj = {
+		a:1,
+		b:2,
+		c,// 将变量c的名字作为属性名,c的值作为属性值
+		[c]:100,// 变量c的值10,作为属性名,值为100
+		"$%(*&":200
+	}
+	let prop = "$%(*&";
+	console.log(obj["$%(*&"],obj[prop]);
+</script>
+</html>

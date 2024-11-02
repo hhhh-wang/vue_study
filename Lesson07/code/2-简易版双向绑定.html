@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    <input type="text">
+    <div></div>
+</div>
+</body>
+<script>
+    const inp = document.querySelector("#root input");
+    const div = document.querySelector("#root div");
+    const data = {
+        str: "我确定你就是那只匹着羊皮的狼！"
+    };
+    let _str = data.str;
+    Object.defineProperty(data, "str", {
+        get() {
+            return _str;
+        },
+        set(v) {
+            _str = inp.value = div.innerText = v;
+        }
+    })
+    inp.value = div.innerText = data.str;
+    inp.oninput = function () {
+        data.str = div.innerText = this.value;
+    }
+
+
+</script>
+</html>

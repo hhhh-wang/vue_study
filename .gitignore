@@ -1,0 +1,7 @@
+Lesson01/code/_idea/
+*/*/_idea/*
+*.md
+.idea/
+*/node_modules/*
+Lesson05/code/api/node_modules/*
+Lesson08/课件/

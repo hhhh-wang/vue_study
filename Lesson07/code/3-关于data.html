@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+	<div id="root">
+		<p>a:{{a}}</p>
+		<input type="text" v-model="b">
+	</div>
+</body>
+<script>
+	// 为什么在Vue实例中可以使用data的属性值？
+	const vm = new Vue({
+		el:"#root",
+		data:{
+			a:1,
+			b:2,
+			c:3
+		},
+		methods:{
+			fn(){
+				console.log(this,this.a,this.b,this.c)
+			}
+		}
+	});
+	// console.log(vm.a,vm.b,vm.c);
+	// console.log(vm.$data);
+	// vm.a = 100;
+	// console.log(vm.$data.a);// 100
+	// vm.$data.a = 200;
+	// console.log(vm.a);
+	// console.log(vm);
+	// vm.fn();
+	const fn = vm.fn;
+	fn();
+</script>
+</html>

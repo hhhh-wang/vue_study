@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<!--未使用自定义指令实现防抖-->
+	<input @input="fn" type="text" placeholder="未使用自定义指令实现防抖">
+	<!--使用自定义指令	-->
+	<input v-debounce.5000="fn2" type="text" placeholder="使用自定义指令1">
+	<input v-debounce2="fn2" type="text" placeholder="使用自定义指令2">
+</div>
+</body>
+<script>
+	new Vue({
+		el:"#app",
+		methods:{
+			fn(){
+				if(this.timer)
+					clearTimeout(this.timer);
+				this.timer = setTimeout(()=>{
+					const xhr = new XMLHttpRequest();
+					xhr.open("get","./tp.html");
+					xhr.send();
+					xhr.onload = function(){
+						console.log(xhr.response);
+					}
+				},300)
+				
+				
+			},
+			fn2(){
+				const xhr = new XMLHttpRequest();
+				xhr.open("get","./tp.html");
+				xhr.send();
+				xhr.onload = function(){
+					console.log(xhr.response);
+				}
+			}
+		},
+		directives:{
+			debounce2:{
+				bind(el,binds){
+					let t = 300;
+					if(binds.arg){
+						t = binds.arg/1;
+					}
+					console.log(t);
+					el.addEventListener("input",()=>{
+						if(this.timer) clearTimeout(this.timer);
+						this.timer = setTimeout(()=>{
+							binds.value();
+						},t)
+						
+					})
+				}
+			},
+			debounce:{
+				bind(el,binds){
+					let t = 300;
+					const arr =Object.keys(binds.modifiers);
+					if(arr.length>0){
+						t = arr[0]/1;
+					}
+					el.addEventListener("input",()=>{
+						if(this.timer) clearTimeout(this.timer);
+						this.timer = setTimeout(()=>{
+							binds.value();
+						},t)
+						
+					})
+				}
+			}
+		}
+	})
+</script>
+</html>

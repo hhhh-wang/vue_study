@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<input v-focus ref="inp" v-model="str"  type="text">
+	<p>{{str}}</p>
+</div>
+</body>
+<script>
+	new Vue({
+		el:"#app",
+		data:{
+			str:"字符串"
+		},
+		directives:{
+			// focus(el){
+			// 	setTimeout(()=>{
+			// 		document.querySelector("input").focus();
+			// 	},200)
+			// 	// el.focus();
+			// 	// document.querySelector("input").focus();
+			// 	// console.log(document.querySelector("input").value)
+			// }
+			focus:{
+				// 当挂载完成之后执行。
+				inserted(el){
+					console.log(el === document.querySelector("input"))
+					el.focus();
+					// document.querySelector("input").focus()
+					// console.log("inserted",document.querySelector("input").value)
+				}
+			}
+		},
+		mounted(){
+			// document.querySelector("input").focus();
+			// this.$refs.inp.focus();
+			console.log("mounted",document.querySelector("input").value)
+		}
+	})
+</script>
+</html>

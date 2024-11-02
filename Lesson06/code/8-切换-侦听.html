@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+		#app button{
+			padding:5px;
+			margin:5px;
+		}
+		#app button.active{
+			background: red;
+		}
+		#app div{
+			width: 500px;
+			height: 300px;
+			border:1px solid green;
+		}
+	</style>
+	<script src="lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<button :class="{active:index===i}" @click="index=i" v-for="(item,i) in newsList" :key="i">{{item.type}}</button>
+	<div>
+		<p v-for="item in infoArr" :key="item.id">{{item.newsTitle}}</p>
+	</div>
+</div>
+</body>
+<script>
+	new Vue({
+		el:"#app",
+		data:{
+			index:1,
+			infoArr:[],
+			newsList:[
+				{
+					type:"体育",
+					infoList:[
+						{
+							id:11,
+							newsTitle:"体育1"
+						},
+						{
+							id:12,
+							newsTitle:"体育2"
+						}
+					]
+				},
+				{
+					type:"娱乐",
+					infoList:[
+						{
+							id:21,
+							newsTitle:"娱乐1"
+						},
+						{
+							id:22,
+							newsTitle:"娱乐2"
+						}
+					]
+				},
+				{
+					type:"财经",
+					infoList:[
+						{
+							id:31,
+							newsTitle:"财经1"
+						},
+						{
+							id:32,
+							newsTitle:"财经2"
+						}
+					]
+				}
+			]
+		},
+		watch:{
+			// index(){
+			// 	this.infoArr = this.newsList[this.index].infoList;
+			// }
+			index:{
+				handler(){
+					//也支持异步
+					setTimeout(()=>{
+						this.infoArr = this.newsList[this.index].infoList;
+					})
+					
+				},
+				immediate:true
+			}
+		}
+	})
+</script>
+</html>
