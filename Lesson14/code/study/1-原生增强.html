@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+	// 对原生方法加强思路：
+	// 1- 将原生的方法进行一个备份
+	// 2- 重写原生方法，在重写方法当中调用备份。
+	
+	// 常识：
+	// 1- push是原生程序：native code
+	// 2- push来自于Array.prototype.push
+	const arr = [1,2,3,4,5];
+	// native code
+	// console.log(arr.push);
+	// arr.push(8);
+	// console.log(arr);// [1,2,3,4,5,9]
+	
+	// push来自于Array.prototype.push
+	// console.log(Array.prototype.push=== arr.push);// true
+	
+	// 更改push
+	// 1- 将原生的方法进行一个备份
+	const nativePush = Array.prototype.push;
+	// 2- 重写原生方法，在重写方法当中调用备份。
+	Array.prototype.push = function(value){
+		value+=1;
+		nativePush.call(this,value);
+	}
+	arr.push(10);
+	console.log(arr);// [1,2,3,4,5,11]
+</script>
+</html>
