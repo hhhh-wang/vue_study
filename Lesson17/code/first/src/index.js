@@ -1,0 +1,28 @@
+import Vue from "vue";
+import App from "@/App";
+import router from "@/router";
+import store from "@/store";
+import filters from "@/filters";
+import "@/mock";
+import "@/assets/css/reset.css";
+import "@/assets/iconfont/iconfont.css";
+import Pagination from "@/components/Pagination";
+// 设置为 false 以阻止 vue 在启动时生成生产提示
+Vue.config.productionTip = false;
+
+new Vue({
+	el:"#app",
+	router,
+	store,
+	beforeCreate() {
+		// 全局过滤器
+		for(let key in filters){
+			Vue.filter(key,filters[key]);
+		}
+		// 全局事件总线
+		Vue.prototype.$bus = this;
+		Vue.component("Pagination",Pagination);
+	},
+	render:h=>h(App)
+})
+
