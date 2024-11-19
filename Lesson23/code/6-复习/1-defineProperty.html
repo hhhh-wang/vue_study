@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+	// 1- defineProperty是属性Object对象下的函数。
+	// 2- 接收三个参数：第一个参数是操作的对象，第二个参数是拦截的属性名字，第三个参数是描述对象。
+	// 1- get
+	// const obj = {
+	// 	userName:"zhangsan"
+	// };
+	// Object.defineProperty(obj,"userName",{
+	// 	// 获取时（输出，赋值，比较）可以被调用,返回值即为调用的结果
+	// 	get(){
+	// 		console.log("get")
+	// 	}
+	// });
+	// // 输出
+	// console.log(obj.userName);// undefined
+	// // 比较
+	// if(obj.userName === "zhangsan"){
+	// 	console.log("ok");
+	// }else{
+	// 	console.log("no");
+	// }
+	// // 赋值
+	// const userName = obj.userName;
+	// console.log(userName);// undefined
+	// function fn(userName){
+	// 	console.log(userName);// undefined
+	// }
+	// fn(obj.userName);
+	
+	
+	// 2- set
+	const obj = {
+		userName:"zhangsan"
+	}
+	let value = obj.userName;
+	Object.defineProperty(obj,"userName",{
+		// 读取时
+		get(){
+			return "《"+value+"》";
+		},
+		// 设置时执行，接收的参数即是最新赋予的值。
+		set(v){
+			// console.log("set",v);
+			value = v;
+		}
+	});
+	// obj.userName = "lisi";
+	// console.log(obj.userName);// 《lisi》
+	console.log(obj.userName);//
+	
+</script>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<h3></h3>
+	<p></p>
+	<hr/>
+	<button>点我</button>
+</body>
+<script>
+	// 1- ref是一个函数
+	// 2- ref可以接收任意类型的数据
+	// 3- ref可以获取到一个RefImpl实例
+	// 4- RefImpl实例中拥有属性value
+	// 5- ref接收的是一个基本数据类型是通过defineProperty实现的响应式
+	// 6- 如果ref接收的是一个引用类型，那么返回的RefImpl实例中的value值是proxy
+	function reactive(value){
+		return  new Proxy(value,{
+			get(target,key){
+				// console.log("get");
+				return target[key];
+			},
+			set(target,key,newValue){
+				target[key] = p.innerText = newValue;
+			}
+		})
+	}
+	function RefImpl(value){
+		if(typeof value === "object"){
+			// 将value设置为目标对象
+			this.value = reactive(value);
+		}else{
+			let _value = value;
+			Object.defineProperty(this,"value",{
+				get(){
+					// console.log("get");
+					return _value;
+				},
+				set(v){
+					// console.log("set",v);
+					h3.innerText=_value = v;
+				}
+			})
+		}
+		
+	}
+	
+	const ref = function(value){
+		return new RefImpl(value);
+	}
+	const h3 = document.querySelector("h3");
+	const p = document.querySelector("p");
+	const btn = document.querySelector("button");
+	const count = ref(10);
+	const obj = ref({
+		userName:"zhangsan"
+	})
+	h3.innerText = count.value;
+	p.innerText = obj.value.userName;
+	btn.onclick = function(){
+		count.value++;
+		obj.value.userName+="!";
+		// console.log(count.value)
+	}
+	
+	
+</script>
+</html>

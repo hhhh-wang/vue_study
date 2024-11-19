@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+	// 1- Proxy是一个内置构造函数
+	// console.log(Proxy);// ƒ Proxy() { [native code] }
+	
+	// 2- 接收两个参数，第一个参数是一个对象(目标对象)，第二个参数是描述对象
+	let obj = {
+		userName:"zhangsan"
+	};
+	// p是Proxy实例,相当于对obj进行了一个深度复制。
+	// 所有对obj的操作可以通过p来进行。即是代理。
+	const p = new Proxy(obj,{
+		// 当获取p的属性时执行。
+		// 第一个参数是目标对象
+		// 第二个参数是操作的属性名
+		// 第三个参数是Proxy实例p
+		get(target,key,proxy){
+			console.log("proxy->get->userName",target===obj);// proxy->get->userName true
+			console.log("proxy->get->key",key);// proxy->get->key userName
+			console.log("proxy->get->proxy",proxy===p);// proxy->get->proxy true
+			return "《"+target[key]+"》";
+		},
+		// 当修改p属性时执行。
+		// 第一个参数是目标对象target
+		// 第二个参数是操作的属性名key
+		// 第三个参数是要修改的值
+		// 第四个参数是Proxy实例p
+		set(target,key,newValue,proxy){
+			console.log("proxy-set->target",target===obj);// proxy-set->target true
+			console.log("proxy-set->key",key);// proxy-set->key userName
+			console.log("proxy-set->newValue",newValue);// proxy-set->newValue lisi
+			console.log("proxy-set->proxy",proxy===p);// proxy-set->proxy true
+			target[key] = newValue;
+		}
+	});
+	// console.log(obj.userName,p.userName);
+	// obj.userName = "lisi";
+	// p.userName = "lisi";
+	
+	console.log(p.userName);// 《zhangsan》
+	
+	p.userName = "lisi";
+	console.log(p.userName);// 《lisi》
+	
+</script>
+</html>
