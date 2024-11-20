@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<h3></h3>
+	<button>点我</button>
+</body>
+<script>
+	const h3 = document.querySelector("h3");
+	const btn = document.querySelector("button");
+	function reactive(value){
+		return new Proxy(value,{
+			get(target,key){
+				return target[key];
+			},
+			set(target,key,newValue){
+				h3.innerText = target[key] = newValue;
+			}
+		})
+	}
+	function RefImpl(value){
+		let _value = value;
+		// 为当前实例的属性value增加拦截
+		Object.defineProperty(this,"value",{
+			// 返回值即是该实例下value的值
+			get(){
+				return _value;
+			},
+			set(v){
+				if(typeof v === "object")
+				{
+					_value = reactive(v);
+					h3.innerText = _value.age;
+				}
+				
+			}
+		});
+		if(typeof value === "object")
+			this.value = reactive(value);
+	}
+	function ref(value){
+		return new RefImpl(value);
+	}
+	let count = ref({
+		age:100
+	});
+	console.log(count);
+	h3.innerText = count.value.age;
+	btn.onclick = function(){
+		// count.value = {
+		// 	age:900
+		// }
+		// console.log(count.value)
+		
+		count.value.age = 80;
+	}
+</script>
+</html>
